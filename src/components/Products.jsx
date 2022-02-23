@@ -5,7 +5,7 @@ import book from '../assets/book.jpg'
 import Product from './Product'
 
 const ProductItems = [
-    { id: '1', image: book, name: 'item-1', qty: 10, inventory: 10, price: '10.00' },
+    { id: '1', image: book, name: 'item-1', qty: 10, inventory: 0, price: '10.00' },
     { id: '2', image: book, name: 'item-2', qty: 10, inventory: 10, price: '10.00' },
     { id: '3', image: book, name: 'item-3', qty: 10, inventory: 10, price: '10.00' },
     { id: '4', image: book, name: 'item-4', qty: 10, inventory: 10, price: '10.00' },

@@ -1,49 +1,154 @@
-import React from 'react'
-import { Row, Col, Typography, Image, Space } from 'antd'
+import React, { useState } from 'react'
+import { Row, Col, Typography, Image, Space, Button } from 'antd'
+import { LockOutlined, ShoppingOutlined } from '@ant-design/icons'
 
 const { Title, Text, Link } = Typography
 
 const Product = ({ item }) => {
+
+    const [hover, setHover] = useState(false)
+    // console.log(hover);
+
+
     return (
         <div
             style={{
-                // border: '1px solid black',
-                padding: '1.3rem',
+                // border: '1px solid #000',
+                padding: '.5rem',
                 margin: '1rem',
             }}
         >
-            <>
-                <Image src={item.image} alt={item.name} width={250} preview={false} />
-            </>
-            <Row style={{ margin: '1rem 0' }}>
-                <Col span={8} >
-                    <Text
-                        strong
-                        type='secondary'
-                    // style={{ border: '1px solid black' }}
+            {/* TODO: image box */}
+            <div
+                style={{
+                    // border: '1px solid #000',
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    // opacity: 0.7
+                }}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+            >
+                <div
+                    style={{
+                        // background: '#f8f8f8',
+                        background: 'rgba(236, 241, 242, 0.35)',
+                        padding: '10px 0',
+                        width: '100%',
+                        height: '100%',
+                    }}
+                >
+                    <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={150}
+                        preview={false}
+                    />
+                </div>
+
+                {hover &&
+                    <div
+                        style={{
+                            position: 'absolute',
+                            paddingTop: '3rem',
+                            background: '#d4d4d4',
+                            opacity: 0.9,
+                            width: '100%',
+                            height: '100%',
+                        }}
                     >
-                        {item.name}
-                    </Text>
-                </Col>
-                <Col span={8}>
-                    <Text
-                        strong
-                        type='danger'
-                    // style={{ border: '1px solid black' }}
-                    >
-                        {item.inventory}
-                    </Text>
-                </Col>
-                <Col span={8}>
-                    <Text
-                        strong
-                        type='success'
-                    // style={{ border: '1px solid black' }}
-                    >
-                        {`$${item.price}`}
-                    </Text>
-                </Col>
-            </Row>
+                        <Space direction='vertical'>
+                            <Button
+                                size='large'
+                                style={{
+                                    width: 210,
+                                    height: 50,
+                                    border: '1px solid grey',
+                                    color: 'grey',
+                                    borderRadius: '3px'
+                                }}
+                            >
+                                Product Details
+                            </Button>
+
+                            {item.inventory
+                                ? <Button
+                                    icon={<ShoppingOutlined />}
+                                    size='large'
+                                    style={{
+                                        width: 210,
+                                        height: 50,
+                                        border: 'none',
+                                        color: '#fff',
+                                        background: '#058335',
+                                        fontWeight: '500',
+                                        borderRadius: '3px'
+                                    }}
+                                >
+                                    Add to cart
+                                </Button>
+                                : <Button
+                                    icon={<LockOutlined />}
+                                    size='large'
+                                    style={{
+                                        width: 210,
+                                        height: 50,
+                                        border: 'none',
+                                        color: '#fff',
+                                        background: '#f35858',
+                                        fontWeight: '500',
+                                        borderRadius: '3px'
+                                    }}
+                                >
+                                    Sold Out
+                                </Button>
+                            }
+                        </Space>
+                    </div>
+                }
+
+            </div>
+
+
+            {/* TODO: info box */}
+            <div
+                style={{
+                    // border: '1px solid #000',
+                    margin: '5px 0'
+
+                }}
+            >
+                <Row
+                    style={{
+                        margin: '1rem 0',
+                        fontSize: '16px',
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <Col span={12} >
+                        <Space size='small'>
+                            <Text strong type='secondary' >
+                                {item.name}
+                            </Text>
+                            {item.inventory
+                                ? <Text strong type='warning'>
+                                    {`(qty: ${item.inventory})`}
+                                </Text>
+                                : <Text strong type='danger'>
+                                    (Sold out)
+                                </Text>
+                            }
+                        </Space>
+                    </Col>
+                    <Col span={8}>
+                        <Text strong type='success' >
+                            {`฿${item.price}`}
+                        </Text>
+                    </Col>
+                </Row>
+            </div>
 
         </div>
     )

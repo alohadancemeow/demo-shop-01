@@ -10,10 +10,10 @@ const Logo = () => {
         <div style={{ margin: '3.5rem' }}>
             <Row>
                 <Col span={24} >
-                    <Image src={logoImage3} alt='logo' width={150} preview={false} />
+                    <Image src={logoImage3} alt='logo' width={100} preview={false} />
                 </Col>
                 <Col span={24}>
-                    <Title level={2} type='secondary' style={{ margin: '1rem 0 0', padding: 0 }}>Rabbit store</Title>
+                    <Title level={3} type='secondary' style={{ margin: '1rem 0 0', padding: 0 }}>Rabbit store</Title>
                     <Text type='secondary' >A Rabbit store is open, let's shop now!</Text>
                 </Col>
             </Row>
