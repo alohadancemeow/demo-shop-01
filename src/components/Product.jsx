@@ -1,13 +1,122 @@
 import React, { useState } from 'react'
-import { Row, Col, Typography, Image, Space, Button } from 'antd'
-import { LockOutlined, ShoppingOutlined } from '@ant-design/icons'
+import { Row, Col, Typography, Image, Space, Button, Modal } from 'antd'
+import { LockOutlined, ShoppingOutlined, CloseCircleOutlined, PushpinFilled } from '@ant-design/icons'
 
 const { Title, Text, Link } = Typography
 
 const Product = ({ item }) => {
 
+    // States
     const [hover, setHover] = useState(false)
+    const [visible, setVisible] = useState(false)
     // console.log(hover);
+
+
+    const ProductDetails = () => (
+        <Modal
+            // title={item.name}
+            centered
+            visible={visible}
+            onOk={() => setVisible(false)}
+            onCancel={() => setVisible(false)}
+            width={600}
+            footer={null}
+            closeIcon={<CloseCircleOutlined />}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={400}
+                    preview={false}
+                />
+                <div
+                    style={{
+                        fontSize: '16px',
+                        width: '100%',
+                        height: 'auto',
+                        background: '#ebebeb',
+                        margin: '15px 0',
+                        padding: '10px',
+                        borderRadius: '4px',
+                        textAlign: 'center'
+                    }}
+                >
+                    <Text type='secondary'>
+                        <strong>
+                            <PushpinFilled /> {' '}
+                            description:
+                        </strong>
+                        <br />
+                        A good book is available now!
+                    </Text>
+                </div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        padding: '20px'
+                    }}
+                >
+                    <Button
+                        icon={<CloseCircleOutlined />}
+                        size='large'
+                        type='text'
+                        style={{
+                            width: 210,
+                            height: 50,
+                            border: '1px solid #dad8d8',
+                            fontWeight: '500',
+                            borderRadius: '3px'
+                        }}
+                        onClick={() => setVisible(false)}
+                    >
+                        Close
+                    </Button>
+                    {item.inventory
+                        ? <Button
+                            icon={<ShoppingOutlined />}
+                            size='large'
+                            style={{
+                                width: 210,
+                                height: 50,
+                                border: 'none',
+                                color: '#fff',
+                                background: '#588ef3',
+                                fontWeight: '500',
+                                borderRadius: '3px'
+                            }}
+                        >
+                            {`Buy ฿${item.price}`}
+                        </Button>
+                        : <Button
+                            icon={<LockOutlined />}
+                            size='large'
+                            disabled
+                            style={{
+                                width: 210,
+                                height: 50,
+                                border: 'none',
+                                color: '#fff',
+                                background: '#f35858',
+                                fontWeight: '500',
+                                borderRadius: '3px'
+                            }}
+                        >
+                            Sold out
+                        </Button>
+                    }
+                </div>
+            </div>
+        </Modal>
+    )
 
 
     return (
@@ -68,6 +177,7 @@ const Product = ({ item }) => {
                                     color: 'grey',
                                     borderRadius: '3px'
                                 }}
+                                onClick={() => setVisible(true)}
                             >
                                 Product Details
                             </Button>
@@ -109,6 +219,8 @@ const Product = ({ item }) => {
                 }
 
             </div>
+
+            <ProductDetails />
 
 
             {/* TODO: info box */}
