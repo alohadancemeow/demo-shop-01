@@ -11,13 +11,13 @@ const ProductItems = [
     { id: '4', image: book, name: 'item-4', qty: 10, inventory: 10, price: '10.00' },
 ]
 
-const Products = () => {
+const Products = ({ open, setOpen }) => {
     return (
         <div style={{ margin: '3.5rem' }}>
             <Row >
                 {ProductItems.map(item => (
                     <Col xs={24} sm={24} md={12} lg={8} key={item.id}>
-                        <Product item={item} />
+                        <Product item={item} open={open} setOpen={setOpen} />
                     </Col>
                 ))}
             </Row>

@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import { Row, Col, Typography, Image, Space, Button, Modal } from 'antd'
-import { LockOutlined, ShoppingOutlined, CloseCircleOutlined, PushpinFilled } from '@ant-design/icons'
+import { Row, Col, Typography, Image, Space, Button, Table, Empty, Modal, Drawer, Avatar } from 'antd'
+import { LockOutlined, ShoppingOutlined, CloseCircleOutlined, RightCircleOutlined, PushpinFilled } from '@ant-design/icons'
 
 const { Title, Text, Link } = Typography
 
-const Product = ({ item }) => {
+const Product = ({ item, open, setOpen }) => {
 
     // States
     const [hover, setHover] = useState(false)
     const [visible, setVisible] = useState(false)
+    // const [open, setOpen] = useState(false)
     // console.log(hover);
 
 
+    // create modal
     const ProductDetails = () => (
         <Modal
             // title={item.name}
@@ -93,6 +95,10 @@ const Product = ({ item }) => {
                                 fontWeight: '500',
                                 borderRadius: '3px'
                             }}
+                            onClick={() => {
+                                setVisible(false)
+                                setOpen(true)
+                            }}
                         >
                             {`Buy ฿${item.price}`}
                         </Button>
@@ -115,7 +121,159 @@ const Product = ({ item }) => {
                     }
                 </div>
             </div>
-        </Modal>
+        </Modal >
+    )
+
+    // data for table
+    const dataSource = [
+        {
+            key: '1',
+            image: <Image src={item.image} width={50} />,
+            name: `${item.name}`,
+            qty: `${item.qty}`,
+            price: `฿${(item.price * item.qty).toFixed(2)}`,
+        },
+        {
+            key: '2',
+            image: <Image src={item.image} width={50} />,
+            name: 'John',
+            qty: 42,
+            price: '฿10.00',
+        },
+        {
+            key: '3',
+            image: <Image src={item.image} width={50} />,
+            name: 'John',
+            qty: 42,
+            price: '฿10.00',
+        },
+        {
+            key: '4',
+            image: <Image src={item.image} width={50} />,
+            name: 'John',
+            qty: 42,
+            price: '฿10.00',
+        },
+    ];
+
+    // columns for table
+    const columns = [
+        {
+            title: 'Image',
+            dataIndex: 'image',
+            key: 'image',
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Qty',
+            dataIndex: 'qty',
+            key: 'qty',
+        },
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
+        },
+    ];
+
+    // create drawer with table and 2 buttons
+    const CartDrawer = () => (
+        <Drawer
+            title="Your Cart"
+            placement="right"
+            onClose={() => setOpen(false)}
+            visible={open}
+            width={500}
+            closeIcon={<CloseCircleOutlined />}
+        >
+
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+
+                {/* <Empty
+                    imageStyle={{ height: 500 }}
+                    description={false}
+                /> */}
+
+                <div
+                    style={{
+                        width: '100%',
+                        margin: '0 20px'
+                    }}
+                >
+                    <Table
+                        dataSource={dataSource}
+                        columns={columns}
+                        pagination={false}
+                        showHeader={false}
+                        style={{ fontWeight: 500 }}
+                        footer={() => (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    margin: '15px 30px 10px 0',
+                                    fontSize: '18px',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                <Text>Total</Text>
+                                <Text>฿1000.00</Text>
+                            </div>
+                        )}
+                    />
+                </div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        padding: '20px 0'
+                    }}
+                >
+                    <Button
+                        icon={<CloseCircleOutlined />}
+                        size='large'
+                        type='text'
+                        style={{
+                            width: 200,
+                            height: 50,
+                            border: '1px solid #dad8d8',
+                            fontWeight: '500',
+                            borderRadius: '3px'
+                        }}
+                        onClick={() => setOpen(false)}
+                    >
+                        Close
+                    </Button>
+                    <Button
+                        icon={<RightCircleOutlined />}
+                        size='large'
+                        style={{
+                            width: 200,
+                            height: 50,
+                            border: 'none',
+                            color: '#fff',
+                            background: '#588ef3',
+                            fontWeight: '500',
+                            borderRadius: '3px'
+                        }}
+                    >
+                        Next
+                    </Button>
+                </div>
+
+            </div>
+        </Drawer>
     )
 
 
@@ -195,6 +353,7 @@ const Product = ({ item }) => {
                                         fontWeight: '500',
                                         borderRadius: '3px'
                                     }}
+                                    onClick={() => setOpen(true)}
                                 >
                                     Add to cart
                                 </Button>
@@ -221,6 +380,7 @@ const Product = ({ item }) => {
             </div>
 
             <ProductDetails />
+            <CartDrawer />
 
 
             {/* TODO: info box */}

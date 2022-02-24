@@ -7,7 +7,7 @@ const { Title, Text } = Typography;
 
 const Logo = () => {
     return (
-        <div style={{ margin: '3.5rem' }}>
+        <div style={{ padding: ' 1rem 3.5rem' }}>
             <Row>
                 <Col span={24} >
                     <Image src={logoImage3} alt='logo' width={100} preview={false} />
