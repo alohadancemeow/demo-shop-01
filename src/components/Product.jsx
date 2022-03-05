@@ -137,7 +137,6 @@ const Product = ({ item, setOpen }) => {
                     position: 'relative',
                     display: 'flex',
                     justifyContent: 'center',
-                    // opacity: 0.7
                 }}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
